@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Builder</title>
+
+    <!-- Include GrapesJS CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
+    />
+
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      .gjs-block {
+        width: auto;
+        height: auto;
+        min-height: auto;
+      }
+      /* Let's highlight canvas boundaries */
+      #gjs {
+        border: 3px solid #444;
+      }
+
+      /* Reset some default styling */
+      .gjs-cv-canvas {
+        top: 0;
+        width: 100%;
+        height: 100%;
+        padding: 3rem;
+
+      }
+    </style>
+  </head>
+  <body>
+    <div id="gjs">...</div>
+    <div id="blocks"></div>
+    <!-- Include GrapesJS JS -->
+    <script src="https://unpkg.com/grapesjs"></script>
+    <!-- 
+    <script>
+        // Initialize the GrapesJS editor
+        const editor = grapesjs.init({
+            container: '#editor',
+            height: '100vh',
+            width: '100%',
+            storageManager: false,
+            fromElement: true,
+
+            blockManager: {
+                appendTo: '#blocks',
+                blocks: [
+                    {
+                        id: 'section',
+                        label: 'Section',
+                        content: `<section style="padding: 20px; background: #f4f4f4; border: 1px solid #ddd;">
+                                    <h2>New Section</h2>
+                                    <p>Edit this section</p>
+                                  </section>`,
+                        attributes: { class: 'fa fa-square' }
+                    },
+                    {
+                        id: 'text',
+                        label: 'Text',
+                        content: '<p style="font-size: 18px; cursor: text;">Edit this text</p>',
+                        attributes: { class: 'fa fa-font' }
+                    },
+                    {
+                        id: 'image',
+                        label: 'Image',
+                        content: `<img src="https://via.placeholder.com/300" alt="Placeholder Image" style="width: 100%; max-width: 300px;">`,
+                        attributes: { class: 'fa fa-image' }
+                    }
+                ]
+            },
+
+            // Enable Rich Text Editing
+            selectorManager: { componentFirst: true },
+            plugins: ['grapesjs-preset-webpage'], // Adds useful features like image uploads
+
+            assetManager: {
+                upload: true,
+                uploadText: 'Drop files here or click to upload',
+                addButton: 'Upload Image'
+            }
+        });
+
+        // Add Pages
+        const pages = [
+            { name: 'Home', component: '<h1>Home Page</h1>' },
+            { name: 'About', component: '<h1>About Page</h1>' },
+            { name: 'Contact', component: '<h1>Contact Page</h1>' }
+        ];
+
+        pages.forEach(page => {
+            editor.Pages.add({
+                id: page.name.toLowerCase(),
+                name: page.name,
+                component: page.component
+            });
+        });
+
+        // Auto-select the first page
+        editor.Pages.select(editor.Pages.get('home'));
+    </script> -->
+
+    <script>
+      const editor = grapesjs.init({
+           container: '#gjs',
+            height: '100vh',
+            width: '100%',
+            storageManager: false,
+            fromElement: true,
+        blockManager: {
+          appendTo: "#blocks",
+          blocks: [
+        //     {
+        //       id: "section", // id is mandatory
+        //       label: "<b>Section</b>", // You can use HTML/SVG inside labels
+        //       attributes: { class: "gjs-block-section" },
+        //       content: `<section>
+        //   <h1>This is a simple title</h1>
+        //   <div>This is just a Lorem text: Lorem ipsum dolor sit amet</div>
+        // </section>`,
+        //     },
+            {
+              id: "text",
+              label: "Text",
+              content: '<div data-gjs-type="text">Insert your text here</div>',
+            },
+            {
+              id: "Navbar",
+              label: "Navbar",
+              content: '<div class="navbar"><a href="#" class="logo">Logo</a><ul><li><a href="#">Home</a></li><li><a href="#">About</a></li><li><a href="#">Services</a></li><li><a href="#">Contact</a></li></ul><div class="search-bar"><input type="text" placeholder="Search..."><button type="submit">Search</button></div></div>',
+            },
+            {
+              id: "Section",
+              label: "Section",
+              content: '<section style="padding-top:50px; padding-bottom:50px;"><div style="padding-top:5px; padding-bottom:5px;" >Container</div></section>',
+            },
+            {
+              id: "Section",
+              label: "Section",
+              content: '<section style="padding-top:50px; padding-bottom:50px;"><div style="padding-top:5px; padding-bottom:5px;" >Container</div></section>',
+            },
+
+            {
+              id: "div",
+              label: "div",
+              content: '<div style="padding-top:50px; padding-bottom:50px;">DiV Holder</div>',
+            },
+            {
+              id: "col2",
+              label: "col2",
+              content: `<div style="padding-top:50px; padding-bottom:50px;"><div>Col1</div> <div>Col2</div></div>`
+            },
+            {
+              id: "image",
+              label: "Image",
+              // Select the component once it's dropped
+              select: true,
+              // You can pass components as a JSON instead of a simple HTML string,
+              // in this case we also use a defined component type `image`
+              content: { type: "image" },
+              // This triggers `active` event on dropped components and the `image`
+              // reacts by opening the AssetManager
+              activate: true,
+            },
+          ],
+        },
+      });
+    </script>
+  </body>
+</html>
