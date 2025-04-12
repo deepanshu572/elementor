@@ -12,22 +12,34 @@
     />
 
     <style>
+      /* .gjs-dashed{
+        background-color: blue !important;
+        width: 85% !important;
+      } */
+      .gjs-frame{
+        width: 85% !important;
+        margin-left: 0 !important;
+      }
       body,
       html {
         margin: 0;
         padding: 0;
         height: 100%;
         color: black;
+        font-family: Arial, sans-serif;
       }
-      .main{
+      .main {
         position: relative;
+        display: flex;
       }
       .gjs-block {
         width: auto;
         height: auto;
         min-height: auto;
+        padding: 12px;
+        margin-bottom: 10px;
       }
-      /* Let's highlight canvas boundaries */
+      /* Canvas boundaries */
       #gjs {
         border: 3px solid #444;
       }
@@ -38,264 +50,559 @@
         width: 100%;
         height: 100%;
         padding: 3rem;
-
       }
-      #data{
+      #sidebar {
         height: 100vh;
-    background: #fff;
-    position: absolute;
-    /* width: 100%; */
-    top: 0;
-    /* left: -100%; */
-    z-index: 9;
-    padding: 16px;
-    width: 9.8rem;
-    transition: cubic-bezier(0.19, 1, 0.22, 1)1s;
-    border: 1px solid #e6e6e6;
+        background: #fff;
+        position: relative;
+        z-index: 9;
+        padding: 16px;
+        width: 15%;
+        transition: all 0.3s ease;
+        border: 1px solid #e6e6e6;
+        overflow-y: auto;
       }
-      .gjs-blocks-c{
+      .gjs-blocks-c {
         flex-direction: column;
         align-items: start;
         background-color: #fff;
       }
-      #gjs{
+      #gjs {
         width: 85% !important;
-    margin-left: auto;
-    border: 1px solid #e6e6e6;
+        margin-left: auto;
+        border: 1px solid #e6e6e6;
       }
-     
-      .gjs-two-color{
+
+      .gjs-two-color {
         color: black;
       }
-      .gjs-one-bg{
+      .gjs-one-bg {
         background: #fff;
       }
       .gjs-field {
         background-color: rgb(222 222 222 / 20%);
       }
-      .gjs-category-title, .gjs-layer-title, .gjs-block-category .gjs-title, .gjs-sm-sector-title, .gjs-trait-category .gjs-title{
-        background-color: rgb(222 222 222 / 20%); 
+      .gjs-category-title,
+      .gjs-layer-title,
+      .gjs-block-category .gjs-title,
+      .gjs-sm-sector-title,
+      .gjs-trait-category .gjs-title {
+        background-color: rgb(222 222 222 / 20%);
       }
-      .gjs-three-bg{
-        background-color: #5B21B6;
+      .gjs-three-bg {
+        background-color: #5b21b6;
       }
-      .gjs-four-color{
+      .gjs-four-color {
         color: black;
       }
-     .gjs-pn-views-container,
-     .gjs-pn-views,
-      .gjs-pn-commands{
+      .gjs-pn-views-container,
+      .gjs-pn-views,
+      .gjs-pn-commands {
         box-shadow: unset;
         border: 1px solid #e6e6e6;
-
       }
-      .gjs-sm-field.gjs-sm-composite, .gjs-sm-composite.gjs-clm-select, .gjs-sm-composite.gjs-clm-field{
+      .gjs-sm-field.gjs-sm-composite,
+      .gjs-sm-composite.gjs-clm-select,
+      .gjs-sm-composite.gjs-clm-field {
         background-color: unset;
       }
       .gjs-selected {
-    outline: 2px solid #3B97E3 !important;
-}
-.plus{
-  position: absolute;
-    top: 8px;
-    z-index: 9;
-    width: 17px;
-    left: 30%;
-    background: #00b4ff;
-    padding: 5px 7px;
-    color: #ffff;
-    border-radius: 5px;
-    cursor: pointer;
-    display: flex;
+        outline: 2px solid #3b97e3 !important;
+      }
 
-}
-#plusSvg{
-  transition: cubic-bezier(0.19, 1, 0.22, 1)0.1s;
+      #controls {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #f5f5f5;
+        border-radius: 5px;
+      }
 
-}
-/*  */
+      #controls h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+      }
 
+      button {
+        background-color: #5b21b6;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        margin: 5px 0;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #4a1d96;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      #saved-pages {
+        margin-top: 20px;
+      }
+
+      .page-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px;
+        margin-bottom: 5px;
+        background-color: #f9f9f9;
+        border-radius: 4px;
+      }
+
+      .page-actions {
+        display: flex;
+        gap: 5px;
+      }
+
+      .edit-btn,
+      .delete-btn {
+        padding: 3px 6px;
+        font-size: 0.8rem;
+      }
+
+      .section-title {
+        margin-top: 20px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #ddd;
+      }
+      .gjs-selected{
+        width: 85% !important;
+        background-color: black;
+      }
     </style>
   </head>
   <body>
     <div class="main">
-    <div id="gjs">
-    </div>
-    <!-- <div class="plus" id="plus">
-    <svg  id="plusSvg"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"></path></svg>
-  </div> -->
-  </div>
+      <div id="sidebar">
+        <h2>Page Builder</h2>
+        <div class="section-title">Elements</div>
+        <div id="blocks"></div>
+        <button onclick="logHtmlCss()">Console HTML & CSS</button>
+        <div id="controls">
+          <h3>Page Controls</h3>
+          <input type="text" id="page-name" placeholder="Enter page name" />
+          <button id="save-btn">Save Page</button>
+          <button id="clear-btn">Clear Editor</button>
+        </div>
 
-  <div id="data">
-    <div id="blocks"></div>
-    <div id="blocks2"></div>
-  </div>
+        <div id="saved-pages">
+          <h3 class="section-title">Saved Pages</h3>
+          <div id="pages-list"></div>
+        </div>
+      </div>
+
+      <div id="gjs"></div>
+    </div>
 
     <!-- Include GrapesJS JS -->
     <script src="https://unpkg.com/grapesjs"></script>
-    <!-- 
-    <script>
-        // Initialize the GrapesJS editor
-        const editor = grapesjs.init({
-            container: '#editor',
-            height: '100vh',
-            width: '100%',
-            storageManager: false,
-            fromElement: true,
-
-            blockManager: {
-                appendTo: '#blocks',
-                blocks: [
-                    {
-                        id: 'section',
-                        label: 'Section',
-                        content: `<section style="padding: 20px; background: #f4f4f4; border: 1px solid #ddd;">
-                                    <h2>New Section</h2>
-                                    <p>Edit this section</p>
-                                  </section>`,
-                        attributes: { class: 'fa fa-square' }
-                    },
-                    {
-                        id: 'text',
-                        label: 'Text',
-                        content: '<p style="font-size: 18px; cursor: text;">Edit this text</p>',
-                        attributes: { class: 'fa fa-font' }
-                    },
-                    {
-                        id: 'image',
-                        label: 'Image',
-                        content: `<img src="https://via.placeholder.com/300" alt="Placeholder Image" style="width: 100%; max-width: 300px;">`,
-                        attributes: { class: 'fa fa-image' }
-                    }
-                ]
-            },
-
-            // Enable Rich Text Editing
-            selectorManager: { componentFirst: true },
-            plugins: ['grapesjs-preset-webpage'], // Adds useful features like image uploads
-
-            assetManager: {
-                upload: true,
-                uploadText: 'Drop files here or click to upload',
-                addButton: 'Upload Image'
-            }
-        });
-
-        // Add Pages
-        const pages = [
-            { name: 'Home', component: '<h1>Home Page</h1>' },
-            { name: 'About', component: '<h1>About Page</h1>' },
-            { name: 'Contact', component: '<h1>Contact Page</h1>' }
-        ];
-
-        pages.forEach(page => {
-            editor.Pages.add({
-                id: page.name.toLowerCase(),
-                name: page.name,
-                component: page.component
-            });
-        });
-
-        // Auto-select the first page
-        editor.Pages.select(editor.Pages.get('home'));
-    </script> -->
 
     <script>
-      createStudioEditor({
-        // ...
-        project: {
-          type: 'email',
-          default: {
-              pages: [
-                {
-                  component: '<mjml><mj-body><mj-section><mj-column><mj-text>My email</mj-text></mj-column></mj-section></mj-body></mjml>'
-                },
-              ]
-          },
-        },
-        i18n: {
-          locales: {
-            en: {
-              actions: {
-                importCode: {
-                  content: 'Paste here your MJML code and click Import'
-                }
-              }
-            }
-          }
-        }
-      })
-    </script>
-    <script>
+      // Initialize GrapesJS
       const editor = grapesjs.init({
-           container: '#gjs',
-            height: '100vh',
-            width: '100%',
-            storageManager: false,
-            fromElement: true,
+        container: "#gjs",
+        height: "100vh",
+        width: "auto",
+        storageManager: {
+          type: "local",
+          autosave: false,
+          autoload: false,
+        },
+        // deviceManager: {
+        //   devices: [
+        //     {
+        //       name: "Desktop",
+        //       width: "",
+        //     },
+        //     {
+        //       name: "Tablet",
+        //       width: "768px",
+        //       widthMedia: "992px",
+        //     },
+        //     {
+        //       name: "Mobile",
+        //       width: "320px",
+        //       widthMedia: "480px",
+        //     },
+        //   ],
+        // },
+        // panels: {
+        //   defaults: [
+        //     {
+        //       id: "panel-devices",
+        //       el: ".panel__devices",
+        //       buttons: [
+        //         {
+        //           id: "device-desktop",
+        //           label: "Desktop",
+        //           command: "set-device-desktop",
+        //           active: true,
+        //           togglable: false,
+        //         },
+        //         {
+        //           id: "device-tablet",
+        //           label: "Tablet",
+        //           command: "set-device-tablet",
+        //           togglable: false,
+        //         },
+        //         {
+        //           id: "device-mobile",
+        //           label: "Mobile",
+        //           command: "set-device-mobile",
+        //           togglable: false,
+        //         },
+        //       ],
+        //     },
+        //   ],
+        // },
         blockManager: {
           appendTo: "#blocks",
-        
-          
           blocks: [
-        
             {
-              id: "text",
-              label: "Text",
-              content: '<div data-gjs-type="text">Insert your text here</div>',
-            },
-            {
-              id: "Navbar",
-              label: "Navbar",
-              content: '<div class="navbar"><a href="#" class="logo">Logo</a><ul><li><a href="#">Home</a></li><li><a href="#">About</a></li><li><a href="#">Services</a></li><li><a href="#">Contact</a></li></ul><div class="search-bar"><input type="text" placeholder="Search..."><button type="submit">Search</button></div></div>',
-            },
-            {
-              id: "Section",
+              id: "section",
               label: "Section",
-              content: '<section style="padding-top:50px; padding-bottom:50px;"><div style="padding-top:5px; padding-bottom:5px;" >Container</div></section>',
+              content:
+                '<section class="section" style="padding: 20px;"></section>',
+              category: "Layout",
             },
             {
-              id: "Section",
-              label: "Section",
-              content: '<section style="padding-top:50px; padding-bottom:50px;"><div style="padding-top:5px; padding-bottom:5px;" >Container</div></section>',
-            },
-
-            {
-              id: "div",
-              label: "div",
-              content: '<div style="padding-top:50px; padding-bottom:50px;">DiV Holder</div>',
+              id: "heading",
+              label: "Heading",
+              content: "<h1>Insert your heading here</h1>",
+              category: "Basic",
             },
             {
-              id: "col2",
-              label: "col2",
-              content: `<div style="padding-top:50px; padding-bottom:50px;"><div>Col1</div> <div>Col2</div></div>`
+              id: "paragraph",
+              label: "Paragraph",
+              content:
+                "<p>Insert your text here. This is a paragraph block that you can edit.</p>",
+              category: "Basic",
             },
             {
               id: "image",
               label: "Image",
-              // Select the component once it's dropped
               select: true,
-              // You can pass components as a JSON instead of a simple HTML string,
-              // in this case we also use a defined component type `image`
-              content: { type: "image" },
-              // This triggers `active` event on dropped components and the `image`
-              // reacts by opening the AssetManager
+              content: { type: "image", style: {  width:"300px", padding: "10px" } },
               activate: true,
+              category: "Basic",
+            },
+
+            {
+              id: "youtube-iframe",
+              label: "YouTube Video",
+              select: true,
+              content: {
+                type: "iframe",
+                src: "https://www.youtube.com/embed/your-video-id",
+                style: {
+                  width: "100%",
+                  height: "300px",
+                  border: "none",
+                },
+              },
+              activate: true,
+              category: "Basic",
+            },
+            {
+              id: "button",
+              label: "Button",
+              content: '<button class="button">Click Me</button>',
+              category: "Basic",
+            },
+            {
+              id: "divider",
+              label: "Divider",
+              content: '<hr style="margin: 15px 0;" />',
+              category: "Basic",
+            },
+            {
+              id: "container",
+              label: "Container",
+              content: '<div class="container" style="padding-top: 60px; padding-bottom: 60px;"></div>',
+              category: "Layout",
+            },
+            {
+              id: "div",
+              label: "div",
+              content: '<div class="div" style="padding-top: 20px; padding-bottom: 20px;"></div>',
+              category: "Layout",
+            },
+            {
+              id: "list",
+              label: "List",
+              content:
+                "<ul><li>List Item 1</li><li>List Item 2</li><li>List Item 3</li></ul>",
+              category: "Basic",
             },
           ],
         },
-        
+        // styleManager: {
+        //   sectors: [
+        //     {
+        //       name: "Dimension",
+        //       open: false,
+        //       properties: [
+        //         "width",
+        //         "height",
+        //         "max-width",
+        //         "min-height",
+        //         "margin",
+        //         "padding",
+        //       ],
+        //     },
+        //     {
+        //       name: "Typography",
+        //       open: false,
+        //       properties: [
+        //         "font-family",
+        //         "font-size",
+        //         "font-weight",
+        //         "letter-spacing",
+        //         "color",
+        //         "line-height",
+        //         "text-align",
+        //         "text-decoration",
+        //         "text-shadow",
+        //       ],
+        //     },
+        //     {
+        //       name: "Decorations",
+        //       open: false,
+        //       properties: [
+        //         "background-color",
+        //         "border",
+        //         "border-radius",
+        //         "box-shadow",
+        //       ],
+        //     },
+        //     {
+        //       name: "Extra",
+        //       open: false,
+        //       properties: ["opacity", "transition", "transform"],
+        //     },
+        //   ],
+        // },
       });
+
+
+
+
+
+
+
+
+// Add Commands for device manager
+      editor.Commands.add("set-device-desktop", {
+        run: (editor) => editor.setDevice("Desktop"),
+      });
+      editor.Commands.add("set-device-tablet", {
+        run: (editor) => editor.setDevice("Tablet"),
+      });
+      editor.Commands.add("set-device-mobile", {
+        run: (editor) => editor.setDevice("Mobile"),
+      });
+
+      // Save Button Functionality
+      document
+        .getElementById("save-btn")
+        .addEventListener("click", function () {
+          const pageName = document.getElementById("page-name").value.trim();
+
+          if (!pageName) {
+            alert("Please enter a page name before saving");
+            return;
+          }
+
+          // Get HTML and CSS from editor
+          const htmlContent = editor.getHtml();
+          const cssContent = editor.getCss();
+    
+          // Create a page object
+          const pageData = {
+            name: pageName,
+            html: htmlContent,
+            css: cssContent,
+            components: JSON.stringify(editor.getComponents()),
+            styles: JSON.stringify(editor.getStyle()),
+            timestamp: new Date().toISOString(),
+          };
+
+          // Get existing pages or initialize empty array
+          let savedPages = JSON.parse(localStorage.getItem("savedPages")) || [];
+
+          // Check if page with same name exists
+          const existingPageIndex = savedPages.findIndex(
+            (page) => page.name === pageName
+          );
+
+          if (existingPageIndex !== -1) {
+            const confirmOverwrite = confirm(
+              "A page with this name already exists. Do you want to overwrite it?"
+            );
+            if (confirmOverwrite) {
+              savedPages[existingPageIndex] = pageData;
+            } else {
+              return;
+            }
+          } else {
+            // Add new page
+            savedPages.push(pageData);
+          }
+
+          // Save to localStorage
+          localStorage.setItem("savedPages", JSON.stringify(savedPages));
+
+          // Update the UI
+          updatePagesList();
+
+          alert("Page saved successfully!");
+        });
+
+      // Clear Button Functionality
+      document
+        .getElementById("clear-btn")
+        .addEventListener("click", function () {
+          const confirmClear = confirm(
+            "Are you sure you want to clear the editor? All unsaved changes will be lost."
+          );
+          if (confirmClear) {
+            editor.Components.clear();
+            document.getElementById("page-name").value = "";
+          }
+        });
+
+      // Function to update the list of saved pages
+      function updatePagesList() {
+        const pagesList = document.getElementById("pages-list");
+        pagesList.innerHTML = "";
+
+        const savedPages = JSON.parse(localStorage.getItem("savedPages")) || [];
+
+        if (savedPages.length === 0) {
+          pagesList.innerHTML = "<p>No saved pages yet.</p>";
+          return;
+        }
+
+        savedPages.forEach((page, index) => {
+          const pageItem = document.createElement("div");
+          pageItem.className = "page-item";
+
+          const pageName = document.createElement("span");
+          pageName.textContent = page.name;
+
+          const pageActions = document.createElement("div");
+          pageActions.className = "page-actions";
+
+          const editBtn = document.createElement("button");
+          editBtn.className = "edit-btn";
+          editBtn.textContent = "Edit";
+          editBtn.addEventListener("click", () => loadPage(index));
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.className = "delete-btn";
+          deleteBtn.textContent = "Delete";
+          deleteBtn.addEventListener("click", () => deletePage(index));
+
+          pageActions.appendChild(editBtn);
+          pageActions.appendChild(deleteBtn);
+
+          pageItem.appendChild(pageName);
+          pageItem.appendChild(pageActions);
+
+          pagesList.appendChild(pageItem);
+        });
+      }
+
+      // Function to load a saved page into the editor
+      function loadPage(index) {
+        const savedPages = JSON.parse(localStorage.getItem("savedPages")) || [];
+        const page = savedPages[index];
+
+        if (!page) {
+          alert("Page not found!");
+          return;
+        }
+
+        // Clear current editor content
+        editor.Components.clear();
+
+        // Load the saved components and styles
+        editor.setComponents(JSON.parse(page.components));
+        editor.setStyle(JSON.parse(page.styles));
+
+        // Set the page name in the input field
+        document.getElementById("page-name").value = page.name;
+
+        alert(`Page "${page.name}" loaded successfully!`);
+      }
+
+      // Function to delete a saved page
+      function deletePage(index) {
+        const savedPages = JSON.parse(localStorage.getItem("savedPages")) || [];
+        const pageName = savedPages[index].name;
+
+        const confirmDelete = confirm(
+          `Are you sure you want to delete "${pageName}"?`
+        );
+
+        if (confirmDelete) {
+          savedPages.splice(index, 1);
+          localStorage.setItem("savedPages", JSON.stringify(savedPages));
+          updatePagesList();
+          alert(`Page "${pageName}" deleted successfully!`);
+        }
+      }
+
+      // Initialize the page list on load
+      document.addEventListener("DOMContentLoaded", function () {
+        updatePagesList();
+      });
+
+    // var data =  document.getElementById("gjs-cm-htmlmixed");
+    //   console.log(data);
+      
     </script>
 
-    <!-- <script>
-      var open = document.getElementById("plus");
-      var item = document.getElementById("blocks");
-      var plusSvg = document.getElementById("plusSvg");
-      open.addEventListener("click", function() {
-        plusSvg.style.rotate = plusSvg.style.rotate === "46deg" ? "0deg" : "46deg";
-        item.style.left = item.style.left === "0%"? "-100%" : "0%";
-      });
-    </script> -->
+<script>
+//   function logHtmlCss() {
+//      pageName = document.getElementById("page-name").value.trim();
+ 
+//   let html = editor.getHtml();
+// html = html.replace(/<\/?body[^>]*>/gi, "");
+
+// console.log(html);
+// console.log(pageName);
+// console.log("CSS:", editor.getCss());
+// }
+
+
+
+
+pageName = document.getElementById("page-name").value.trim();
+ 
+ let html = editor.getHtml();
+html = html.replace(/<\/?body[^>]*>/gi, "");
+
+console.log(html);
+console.log(pageName);
+console.log("CSS:", editor.getCss());
+
+
+
+
+</script>
+
   </body>
 </html>
