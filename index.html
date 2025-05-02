@@ -6,10 +6,7 @@
     <title>Page Builder</title>
 
     <!-- Include GrapesJS CSS -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
-    />
+    <link rel="stylesheet" href="grapes.min.css" />
 
     <style>
       /* .gjs-dashed{
@@ -207,7 +204,9 @@
     </div>
 
     <!-- Include GrapesJS JS -->
-    <script src="https://unpkg.com/grapesjs"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+  <script src="grapes.min.js"></script>
+  <!-- <script src="js/script.js"></script> -->
 
     <script>
       // Initialize GrapesJS
@@ -220,54 +219,7 @@
           autosave: false,
           autoload: false,
         },
-        // deviceManager: {
-        //   devices: [
-        //     {
-        //       name: "Desktop",
-        //       width: "",
-        //     },
-        //     {
-        //       name: "Tablet",
-        //       width: "768px",
-        //       widthMedia: "992px",
-        //     },
-        //     {
-        //       name: "Mobile",
-        //       width: "320px",
-        //       widthMedia: "480px",
-        //     },
-        //   ],
-        // },
-        // panels: {
-        //   defaults: [
-        //     {
-        //       id: "panel-devices",
-        //       el: ".panel__devices",
-        //       buttons: [
-        //         {
-        //           id: "device-desktop",
-        //           label: "Desktop",
-        //           command: "set-device-desktop",
-        //           active: true,
-        //           togglable: false,
-        //         },
-        //         {
-        //           id: "device-tablet",
-        //           label: "Tablet",
-        //           command: "set-device-tablet",
-        //           togglable: false,
-        //         },
-        //         {
-        //           id: "device-mobile",
-        //           label: "Mobile",
-        //           command: "set-device-mobile",
-        //           togglable: false,
-        //         },
-        //       ],
-        //     },
-        //   ],
-        // },
-        blockManager: {
+         blockManager: {
           appendTo: "#blocks",
           blocks: [
             {
@@ -348,53 +300,7 @@
             },
           ],
         },
-        // styleManager: {
-        //   sectors: [
-        //     {
-        //       name: "Dimension",
-        //       open: false,
-        //       properties: [
-        //         "width",
-        //         "height",
-        //         "max-width",
-        //         "min-height",
-        //         "margin",
-        //         "padding",
-        //       ],
-        //     },
-        //     {
-        //       name: "Typography",
-        //       open: false,
-        //       properties: [
-        //         "font-family",
-        //         "font-size",
-        //         "font-weight",
-        //         "letter-spacing",
-        //         "color",
-        //         "line-height",
-        //         "text-align",
-        //         "text-decoration",
-        //         "text-shadow",
-        //       ],
-        //     },
-        //     {
-        //       name: "Decorations",
-        //       open: false,
-        //       properties: [
-        //         "background-color",
-        //         "border",
-        //         "border-radius",
-        //         "box-shadow",
-        //       ],
-        //     },
-        //     {
-        //       name: "Extra",
-        //       open: false,
-        //       properties: ["opacity", "transition", "transform"],
-        //     },
-        //   ],
-        // },
-      });
+             });
 
 
 
